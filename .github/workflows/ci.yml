@@ -24,7 +24,7 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.2
 
-    - name: Build the sideload solution
+    - name: Build the solution
       run: msbuild GlanceScreen.sln /p:Platform=ARM64 /p:AppxBundle=$env:AppxBundle /p:AppxBundlePlatforms="ARM|ARM64" /p:AppxPackageDir=${{ github.workspace }}\artifacts\ /p:AppxPackageSigningEnabled=false /restore
       env:
         AppxBundle: Always
