@@ -87,7 +87,12 @@ namespace GlanceScreen
         public event PropertyChangedEventHandler PropertyChanged;
 
         private Registry registry = new Registry();
+
+#if ARM64
         private const string RegPath = @"SOFTWARE\WowAA32Node\OEM\Nokia\lpm";
+#else
+        private const string RegPath = @"SOFTWARE\OEM\Nokia\lpm";
+#endif
 
         private bool forbidWrites = true;
 
