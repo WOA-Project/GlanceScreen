@@ -63,7 +63,7 @@ jobs:
         fetch-depth: 0
 
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
+      uses: microsoft/setup-msbuild@v1.0.2
 
     - name: Update manifest version
       run: |
@@ -72,10 +72,10 @@ jobs:
         $manifest.save(".\$env:UWP_Project_Directory\Package.appxmanifest")
         
     - name: Build the sideload solution
-      run: msbuild $env:Solution_Path /p:Platform=ARM64 /p:AppxBundle=$env:AppxBundle /p:AppxBundlePlatforms="ARM|ARM64" /p:AppxPackageDir=C:\DeployOutput /restore
+      run: msbuild $env:Solution_Path /p:Platform=ARM64 /p:AppxBundle=$env:AppxBundle /p:AppxBundlePlatforms="ARM|ARM64" /p:AppxPackageDir=C:\DeployOutput /p:AppxPackageSigningEnabled=false /restore
       env:
         AppxBundle: Always
-        BuildMode: StoreUpload
+        BuildMode: SideloadOnly
         Configuration: Release
 
     - name: Create archive
