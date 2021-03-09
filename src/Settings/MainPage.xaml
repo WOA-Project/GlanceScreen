@@ -17,7 +17,7 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto" VerticalScrollMode="Auto">
         <StackPanel Margin="24,56,24,24">
             <StackPanel>
-                <TextBlock x:Name="TitleTextBlock" Padding="0,0,0,8" Text="Glance Screen settings" FontWeight="Bold" FontSize="24" TextWrapping="Wrap"/>
+                <TextBlock x:Name="TitleTextBlock" Padding="0,0,0,8" Text="Glance Screen" FontWeight="Bold" FontSize="24" TextWrapping="Wrap"/>
                 <RichTextBlock Padding="0,0,0,32">
                     <Paragraph>
                         <Run Text="To make other lock screen adjustments, "/>
