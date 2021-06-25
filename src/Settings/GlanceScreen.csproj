@@ -224,7 +224,7 @@
       <Version>6.2.12</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.6.0-prerelease.210227001</Version>
+      <Version>2.6.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
