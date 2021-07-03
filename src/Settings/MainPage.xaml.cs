@@ -1,9 +1,11 @@
-﻿using System;
+﻿using lockframework;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Core;
+using Windows.ApplicationModel.LockScreen;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
@@ -25,7 +27,7 @@ namespace GlanceScreen
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public SettingsModel ViewModel = new SettingsModel();
+        public SettingsModel ViewModel => App.ViewModel;
 
         public MainPage()
         {
@@ -34,6 +36,14 @@ namespace GlanceScreen
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
             ApplicationView.GetForCurrentView().TitleBar.ButtonBackgroundColor = Colors.Transparent;
             ApplicationView.GetForCurrentView().TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+
+            LockScreen.EffectiveViewportChanged += LockScreen_EffectiveViewportChanged;
+            LockScreen.ChangeView(null, null, 0.4f);
+        }
+
+        private void LockScreen_EffectiveViewportChanged(FrameworkElement sender, EffectiveViewportChangedEventArgs args)
+        {
+            LockScreen.ChangeView(null, null, 0.4f);
         }
 
         private void MainPage_Loaded(object sender, RoutedEventArgs e)

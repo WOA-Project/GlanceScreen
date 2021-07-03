@@ -511,6 +511,10 @@
                 </RichTextBlock>
             </StackPanel>
 
+            <ScrollViewer x:Name="LockScreen" Height="300" Width="160" HorizontalScrollMode="Disabled" HorizontalScrollBarVisibility="Visible" Background="Black" CornerRadius="8" Margin="0,0,0,24" HorizontalAlignment="Left" ZoomMode="Disabled">
+                <local:LockScreen Height="640" Width="360" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </ScrollViewer>
+            
             <TextBlock Text="Mode" Margin="0,0,0,8" TextWrapping="Wrap" FontWeight="Bold"/>
 
             <Grid Background="{ThemeResource ExpanderHeaderBackground}"
