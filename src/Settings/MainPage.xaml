@@ -14,6 +14,29 @@
         <local:IntegerIsFourToBooleanConverter x:Key="IntegerIsFourToBooleanConverter" />
         <local:IntegerIsNotFourToBooleanConverter x:Key="IntegerIsNotFourToBooleanConverter" />
 
+        <Style x:Key="TextBlockGroupHeaderStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,0,0,8" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+
+        <Style x:Key="GridSettingsBlockStyle" TargetType="Grid">
+            <Setter Property="Background" Value="{ThemeResource ExpanderHeaderBackground}" />
+            <Setter Property="BorderBrush" Value="{ThemeResource ExpanderHeaderBorderBrush}" />
+            <Setter Property="BorderThickness" Value="{ThemeResource ExpanderHeaderBorderThickness}" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="MinHeight" Value="{StaticResource ExpanderMinHeight}" />
+            <Setter Property="Padding" Value="{StaticResource ExpanderContentPadding}" />
+            <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
+            <Setter Property="Margin" Value="0,0,0,8" />
+        </Style>
+
+        <Style x:Key="TextBlockSettingDescriptionStyle" TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Opacity" Value="0.75" />
+        </Style>
+        
         <Style TargetType="ToggleSwitch">
             <Setter Property="Foreground" Value="{ThemeResource ToggleSwitchContentForeground}" />
             <Setter Property="HorizontalAlignment" Value="Left" />
@@ -514,15 +537,10 @@
             <ScrollViewer x:Name="LockScreen" Height="300" Width="160" HorizontalScrollMode="Disabled" HorizontalScrollBarVisibility="Visible" Background="Black" CornerRadius="8" Margin="0,0,0,24" HorizontalAlignment="Left" ZoomMode="Disabled">
                 <local:LockScreen Height="640" Width="360" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </ScrollViewer>
-            
-            <TextBlock Text="Mode" Margin="0,0,0,8" TextWrapping="Wrap" FontWeight="Bold"/>
 
-            <Grid Background="{ThemeResource ExpanderHeaderBackground}"
-                  HorizontalAlignment="Stretch"
-                  MinHeight="{StaticResource ExpanderMinHeight}"
-                  Padding="{StaticResource ExpanderContentPadding}"
-                  CornerRadius="{ThemeResource ControlCornerRadius}"
-                  Margin="0,0,0,8">
+            <TextBlock Text="Mode" Style="{StaticResource TextBlockGroupHeaderStyle}"/>
+
+            <Grid Style="{StaticResource GridSettingsBlockStyle}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -539,7 +557,7 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Text="Display Interval" TextWrapping="Wrap"/>
-                    <TextBlock Grid.Row="1" FontSize="12" Opacity="0.75" Text="Show the time and other lock screen content in standby for the selected period." TextWrapping="Wrap"/>
+                    <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" Text="Show the time and other lock screen content in standby for the selected period." />
 
                 </Grid>
 
@@ -554,7 +572,7 @@
             </Grid>
 
             <StackPanel Margin="0,24,0,0" x:Name="MainContentStackPanel" x:Load="{x:Bind TimeComboBox.SelectedIndex, Mode=OneWay, Converter={StaticResource IntegerHigherThanNilToBooleanConverter}}">
-                <TextBlock Text="Content" Margin="0,0,0,8" TextWrapping="Wrap" FontWeight="Bold"/>
+                <TextBlock Text="Content" Style="{StaticResource TextBlockGroupHeaderStyle}"/>
 
                 <RichTextBlock Margin="0,0,0,8">
                     <Paragraph>
@@ -584,7 +602,7 @@
                                 </Grid.RowDefinitions>
 
                                 <TextBlock Text="Background photo" TextWrapping="Wrap"/>
-                                <TextBlock Grid.Row="1" FontSize="12" Opacity="0.75" Text="Show your lock screen background photo on the glance screen" TextWrapping="Wrap"/>
+                                <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" Text="Show your lock screen background photo on the glance screen" />
 
                             </Grid>
 
@@ -607,7 +625,7 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Text="Image style" TextWrapping="Wrap"/>
-                            <TextBlock Grid.Row="1" FontSize="12" Opacity="0.75" Text="Change the way your background photo looks on the glance screen" TextWrapping="Wrap"/>
+                            <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" Text="Change the way your background photo looks on the glance screen" />
 
                         </Grid>
 
@@ -620,12 +638,7 @@
                     </Grid>
                 </muxc:Expander>
 
-                <Grid Background="{ThemeResource ExpanderHeaderBackground}"
-                      HorizontalAlignment="Stretch"
-                      MinHeight="{StaticResource ExpanderMinHeight}"
-                      Padding="{StaticResource ExpanderContentPadding}"
-                      CornerRadius="{ThemeResource ControlCornerRadius}"
-                      Margin="0,0,0,8">
+                <Grid Style="{StaticResource GridSettingsBlockStyle}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
@@ -642,19 +655,14 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Date" TextWrapping="Wrap"/>
-                        <TextBlock Grid.Row="1" FontSize="12" Opacity="0.75" Text="Show the current date on the glance screen" TextWrapping="Wrap"/>
+                        <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" Text="Show the current date on the glance screen" />
 
                     </Grid>
 
                     <ToggleSwitch Grid.Column="2" VerticalAlignment="Center" Margin="24,0,-72,0" x:Name="DateToggle" IsOn="{x:Bind ViewModel.Date, Mode=TwoWay}"/>
                 </Grid>
 
-                <Grid Background="{ThemeResource ExpanderHeaderBackground}"
-                      HorizontalAlignment="Stretch"
-                      MinHeight="{StaticResource ExpanderMinHeight}"
-                      Padding="{StaticResource ExpanderContentPadding}"
-                      CornerRadius="{ThemeResource ControlCornerRadius}"
-                      Margin="0,0,0,8">
+                <Grid Style="{StaticResource GridSettingsBlockStyle}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
@@ -671,19 +679,14 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Notification icons" TextWrapping="Wrap"/>
-                        <TextBlock Grid.Row="1" FontSize="12" Opacity="0.75" Text="Show your notification icons on the glance screen" TextWrapping="Wrap"/>
+                        <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" Text="Show your notification icons on the glance screen" />
 
                     </Grid>
 
                     <ToggleSwitch Grid.Column="2" VerticalAlignment="Center" Margin="24,0,-72,0" x:Name="NotificationIconsToggle" IsOn="{x:Bind ViewModel.NotificationIcons, Mode=TwoWay}"/>
                 </Grid>
 
-                <Grid Background="{ThemeResource ExpanderHeaderBackground}"
-                      HorizontalAlignment="Stretch"
-                      MinHeight="{StaticResource ExpanderMinHeight}"
-                      Padding="{StaticResource ExpanderContentPadding}"
-                      CornerRadius="{ThemeResource ControlCornerRadius}"
-                      Margin="0,0,0,8">
+                <Grid Style="{StaticResource GridSettingsBlockStyle}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
@@ -700,21 +703,16 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Detailed app status" TextWrapping="Wrap"/>
-                        <TextBlock Grid.Row="1" FontSize="12" Opacity="0.75" Text="Show detailed app status on the glance screen" TextWrapping="Wrap"/>
+                        <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" Text="Show detailed app status on the glance screen" />
 
                     </Grid>
 
                     <ToggleSwitch Grid.Column="2" VerticalAlignment="Center" Margin="24,0,-72,0" x:Name="DetailedAppStatusToggle" IsOn="{x:Bind ViewModel.DetailedAppStatus, Mode=TwoWay}"/>
                 </Grid>
 
-                <TextBlock Text="Exceptions" Margin="0,24,0,8" TextWrapping="Wrap" FontWeight="Bold"/>
+                <TextBlock Text="Exceptions" Padding="0,24,0,0" Style="{StaticResource TextBlockGroupHeaderStyle}"/>
 
-                <Grid Background="{ThemeResource ExpanderHeaderBackground}"
-                      HorizontalAlignment="Stretch"
-                      MinHeight="{StaticResource ExpanderMinHeight}"
-                      Padding="{StaticResource ExpanderContentPadding}"
-                      CornerRadius="{ThemeResource ControlCornerRadius}"
-                      Margin="0,0,0,8">
+                <Grid Style="{StaticResource GridSettingsBlockStyle}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
@@ -732,7 +730,7 @@
                         </Grid.RowDefinitions>
 
                         <TextBlock Text="Always show glance screen when charging" TextWrapping="Wrap"/>
-                        <TextBlock Grid.Row="1" FontSize="12" Opacity="0.75" Text="Show the glance screen all the time when a charger is plugged in and the device is charging" TextWrapping="Wrap"/>
+                        <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" Text="Show the glance screen all the time when a charger is plugged in and the device is charging" />
 
                     </Grid>
 
@@ -758,7 +756,7 @@
                                 </Grid.RowDefinitions>
 
                                 <TextBlock Text="Night mode" TextWrapping="Wrap"/>
-                                <TextBlock Grid.Row="1" FontSize="12" Opacity="0.75" Text="Night mode overrides charging settings." TextWrapping="Wrap"/>
+                                <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" Text="Night mode overrides charging settings." />
 
                             </Grid>
 
@@ -789,8 +787,8 @@
                             </Grid.RowDefinitions>
 
                             <TextBlock Text="Time intervals" TextWrapping="Wrap"/>
-                            <TextBlock Grid.Row="1" FontSize="12" x:Name="ShowLabelText" x:Load="{x:Bind NightModeComboBox.SelectedIndex, Mode=OneWay, Converter={StaticResource IntegerIsNotFourToBooleanConverter}}" Text="Dims glance screen and hides the photo and Glance screen app during the set time range." Opacity="0.75" TextWrapping="Wrap"/>
-                            <TextBlock Grid.Row="1" FontSize="12" x:Name="HideLabelText" x:Load="{x:Bind NightModeComboBox.SelectedIndex, Mode=OneWay, Converter={StaticResource IntegerIsFourToBooleanConverter}}" Text="Hides glance screen during the set time range." Opacity="0.75" TextWrapping="Wrap"/>
+                            <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" x:Name="ShowLabelText" x:Load="{x:Bind NightModeComboBox.SelectedIndex, Mode=OneWay, Converter={StaticResource IntegerIsNotFourToBooleanConverter}}" Text="Dims glance screen and hides the photo and Glance screen app during the set time range." />
+                            <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" x:Name="HideLabelText" x:Load="{x:Bind NightModeComboBox.SelectedIndex, Mode=OneWay, Converter={StaticResource IntegerIsFourToBooleanConverter}}" Text="Hides glance screen during the set time range." />
 
                             <TimePicker Grid.Row="2" VerticalAlignment="Center" Margin="0,12,0,0" Header="Start time" ClockIdentifier="24HourClock" Time="{x:Bind ViewModel.StartTime, Mode=TwoWay}" IsEnabled="{x:Bind NightModeComboBox.SelectedIndex, Mode=OneWay, Converter={StaticResource IntegerHigherThanNilToBooleanConverter}}"/>
                             <TimePicker Grid.Row="3" VerticalAlignment="Center" Margin="0,6,0,12" Header="End time" ClockIdentifier="24HourClock" Time="{x:Bind ViewModel.EndTime, Mode=TwoWay}" IsEnabled="{x:Bind NightModeComboBox.SelectedIndex, Mode=OneWay, Converter={StaticResource IntegerHigherThanNilToBooleanConverter}}"/>
