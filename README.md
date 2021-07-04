@@ -3,6 +3,6 @@ Settings application for Nokia's Low Power Mode, aka Glance Screen and other uti
 
 ## Screenshots
 
-![Glance](assets/glance.png)
+![Glance](assets/Glance.png)
 
-![Settings](assets/settings.png)
+![Settings](assets/Settings.png)
