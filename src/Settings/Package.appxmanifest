@@ -10,7 +10,7 @@
   <Identity
     Name="LumiaWOA.GlanceScreen"
     Publisher="CN=Windows On Lumia Development Second Party Software 2020"
-    Version="1.0.8.0" />
+    Version="1.0.9.0" />
 
   <mp:PhoneIdentity PhoneProductId="82b8c591-66d8-47fd-82a5-4389a6feb33e" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

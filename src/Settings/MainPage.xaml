@@ -14,30 +14,19 @@
         <local:IntegerIsFourToBooleanConverter x:Key="IntegerIsFourToBooleanConverter" />
         <local:IntegerIsNotFourToBooleanConverter x:Key="IntegerIsNotFourToBooleanConverter" />
 
-        <Style x:Key="TextBlockGroupHeaderStyle" TargetType="TextBlock">
-            <Setter Property="Margin" Value="0,0,0,8" />
-            <Setter Property="TextWrapping" Value="Wrap" />
-            <Setter Property="FontWeight" Value="Bold" />
-        </Style>
-
-        <Style x:Key="GridSettingsBlockStyle" TargetType="Grid">
-            <Setter Property="Background" Value="{ThemeResource ExpanderHeaderBackground}" />
-            <Setter Property="BorderBrush" Value="{ThemeResource ExpanderHeaderBorderBrush}" />
-            <Setter Property="BorderThickness" Value="{ThemeResource ExpanderHeaderBorderThickness}" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="MinHeight" Value="{StaticResource ExpanderMinHeight}" />
-            <Setter Property="Padding" Value="{StaticResource ExpanderContentPadding}" />
-            <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
-            <Setter Property="Margin" Value="0,0,0,8" />
-        </Style>
-
         <Style x:Key="TextBlockSettingDescriptionStyle" TargetType="TextBlock">
             <Setter Property="TextWrapping" Value="Wrap" />
             <Setter Property="FontSize" Value="12" />
             <Setter Property="Opacity" Value="0.75" />
         </Style>
         
-        <Style TargetType="ToggleSwitch">
+        <Style x:Key="TextBlockGroupHeaderStyle" TargetType="TextBlock">
+            <Setter Property="Margin" Value="0,0,0,8" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+
+        <Style x:Key="RightAlignedToggleSwitchStyle" TargetType="ToggleSwitch">
             <Setter Property="Foreground" Value="{ThemeResource ToggleSwitchContentForeground}" />
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="VerticalAlignment" Value="Center" />
@@ -46,7 +35,7 @@
             <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
             <Setter Property="ManipulationMode" Value="System,TranslateX" />
             <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
-            <Setter Property="MinWidth" Value="{StaticResource ToggleSwitchThemeMinWidth}"/>
+            <Setter Property="MinWidth" Value="0"/>
             <Setter Property="FocusVisualMargin" Value="-7,-3,-7,-3" />
             <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}"/>
             <Setter Property="Template">
@@ -397,7 +386,7 @@
                             AutomationProperties.AccessibilityView="Raw" />
                             <Grid
                             Grid.Row="1"
-                            HorizontalAlignment="Left"
+                            HorizontalAlignment="Right"
                             VerticalAlignment="Top">
 
                                 <Grid.RowDefinitions>
@@ -442,7 +431,7 @@
                                 AutomationProperties.AccessibilityView="Raw" />
                                 <Rectangle x:Name="OuterBorder"
                                 Grid.Row="1"
-                                           Grid.Column="2"
+                                Grid.Column="2"
                                 Height="20"
                                 Width="40"
                                 RadiusX="10"
@@ -452,7 +441,7 @@
                                 StrokeThickness="{ThemeResource ToggleSwitchOuterBorderStrokeThickness}" />
                                 <Rectangle x:Name="SwitchKnobBounds"
                                 Grid.Row="1"
-                                           Grid.Column="2"
+                                Grid.Column="2"
                                 Height="20"
                                 Width="40"
                                 RadiusX="10"
@@ -463,7 +452,7 @@
                                 Opacity="0" />
                                 <Grid x:Name="SwitchKnob"
                                 Grid.Row="1"
-                                           Grid.Column="2"
+                                Grid.Column="2"
                                 HorizontalAlignment="Left"
                                 Width="20"
                                 Height="20">
@@ -540,28 +529,14 @@
 
             <TextBlock Text="Mode" Style="{StaticResource TextBlockGroupHeaderStyle}"/>
 
-            <Grid Style="{StaticResource GridSettingsBlockStyle}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+            <local:SettingsBlockControl Title="Display Interval"
+                                        Description="Show the time and other lock screen content in standby for the selected period.">
+                <local:SettingsBlockControl.Icon>
+                    <FontIcon Glyph="&#xEE65;" />
+                </local:SettingsBlockControl.Icon>
 
-                <FontIcon Glyph="&#xEE65;" Margin="2,0,20,0"/>
-
-                <Grid Grid.Column="1" VerticalAlignment="Center" >
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Text="Display Interval" TextWrapping="Wrap"/>
-                    <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" Text="Show the time and other lock screen content in standby for the selected period." />
-
-                </Grid>
-
-                <ComboBox Grid.Column="2" VerticalAlignment="Center" Margin="24,0,0,0" x:Name="TimeComboBox" SelectedIndex="{x:Bind ViewModel.Mode, Mode=TwoWay}">
+                <ComboBox x:Name="TimeComboBox"
+                          SelectedIndex="{x:Bind ViewModel.Mode, Mode=TwoWay}">
                     <ComboBox.Items>
                         <ComboBoxItem Content="Off"/>
                         <ComboBoxItem Content="30 seconds"/>
@@ -569,7 +544,7 @@
                         <ComboBoxItem Content="Always on"/>
                     </ComboBox.Items>
                 </ComboBox>
-            </Grid>
+            </local:SettingsBlockControl>
 
             <StackPanel Margin="0,24,0,0" x:Name="MainContentStackPanel" x:Load="{x:Bind TimeComboBox.SelectedIndex, Mode=OneWay, Converter={StaticResource IntegerHigherThanNilToBooleanConverter}}">
                 <TextBlock Text="Content" Style="{StaticResource TextBlockGroupHeaderStyle}"/>
@@ -583,218 +558,130 @@
                     </Paragraph>
                 </RichTextBlock>
 
-                <muxc:Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="0,0,0,8">
-                    <muxc:Expander.Header>
-                        <Grid MinHeight="68" HorizontalAlignment="Stretch">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="42"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
+                <local:SettingsBlockControl Title="Background photo"
+                                            Description="Show your lock screen background photo on the glance screen">
+                    <local:SettingsBlockControl.Icon>
+                        <FontIcon Glyph="&#xEE3F;" />
+                    </local:SettingsBlockControl.Icon>
 
-                            <FontIcon Glyph="&#xEE3F;" Margin="2,0,20,0"/>
+                    <ToggleSwitch x:Name="BackgroundPhotoToggle"
+                                  IsOn="{x:Bind ViewModel.BackgroundPhoto, Mode=TwoWay}"
+                                  Style="{StaticResource RightAlignedToggleSwitchStyle}"/>
 
-                            <Grid Grid.Column="1" VerticalAlignment="Center">
+                    <local:SettingsBlockControl.ExpandableContent>
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
+                        <local:SettingsDisplayControl Margin="16"
+                                                      Title="Image style"
+                                                      Description="Change the way your background photo looks on the glance screen">
 
-                                <TextBlock Text="Background photo" TextWrapping="Wrap"/>
-                                <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" Text="Show your lock screen background photo on the glance screen" />
+                            <ComboBox x:Name="BackgroundImageStyleComboBox"
+                                      IsEnabled="{x:Bind BackgroundPhotoToggle.IsOn, Mode=OneWay}"
+                                      SelectedIndex="{x:Bind ViewModel.BackgroundPhotoColorType, Mode=TwoWay}">
+                                <ComboBox.Items>
+                                    <ComboBoxItem Content="Black and white"/>
+                                    <ComboBoxItem Content="Color"/>
+                                </ComboBox.Items>
+                            </ComboBox>
+                        </local:SettingsDisplayControl>
+                    </local:SettingsBlockControl.ExpandableContent>
+                </local:SettingsBlockControl>
 
-                            </Grid>
+                <local:SettingsBlockControl Title="Date"
+                                            Description="Show the current date on the glance screen">
+                    <local:SettingsBlockControl.Icon>
+                        <FontIcon Glyph="&#xE161;" />
+                    </local:SettingsBlockControl.Icon>
 
-                            <ToggleSwitch x:Name="BackgroundPhotoToggle" Grid.Column="2" VerticalAlignment="Center" Margin="24,0,-84,0" IsOn="{x:Bind ViewModel.BackgroundPhoto, Mode=TwoWay}"/>
-                        </Grid>
-                    </muxc:Expander.Header>
+                    <ToggleSwitch x:Name="DateToggle"
+                                  IsOn="{x:Bind ViewModel.Date, Mode=TwoWay}"
+                                  Style="{StaticResource RightAlignedToggleSwitchStyle}"/>
+                </local:SettingsBlockControl>
 
-                    <Grid HorizontalAlignment="Stretch">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="42"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <Grid Grid.Column="1" VerticalAlignment="Center" >
+                <local:SettingsBlockControl Title="Notification icons"
+                                            Description="Show your notification icons on the glance screen">
+                    <local:SettingsBlockControl.Icon>
+                        <FontIcon Glyph="&#xE3BC;" />
+                    </local:SettingsBlockControl.Icon>
 
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
+                    <ToggleSwitch x:Name="NotificationIconsToggle"
+                                  IsOn="{x:Bind ViewModel.NotificationIcons, Mode=TwoWay}"
+                                  Style="{StaticResource RightAlignedToggleSwitchStyle}"/>
+                </local:SettingsBlockControl>
 
-                            <TextBlock Text="Image style" TextWrapping="Wrap"/>
-                            <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" Text="Change the way your background photo looks on the glance screen" />
+                <local:SettingsBlockControl Title="Detailed app status"
+                                            Description="Show detailed app status on the glance screen">
+                    <local:SettingsBlockControl.Icon>
+                        <FontIcon Glyph="&#xE74C;" />
+                    </local:SettingsBlockControl.Icon>
 
-                        </Grid>
-
-                        <ComboBox Grid.Column="2" VerticalAlignment="Center" Margin="24,0,0,0" x:Name="BackgroundImageStyleComboBox" IsEnabled="{x:Bind BackgroundPhotoToggle.IsOn, Mode=OneWay}" SelectedIndex="{x:Bind ViewModel.BackgroundPhotoColorType, Mode=TwoWay}">
-                            <ComboBox.Items>
-                                <ComboBoxItem Content="Black and white"/>
-                                <ComboBoxItem Content="Color"/>
-                            </ComboBox.Items>
-                        </ComboBox>
-                    </Grid>
-                </muxc:Expander>
-
-                <Grid Style="{StaticResource GridSettingsBlockStyle}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <FontIcon Glyph="&#xE161;" Margin="2,0,20,0"/>
-
-                    <Grid Grid.Column="1" VerticalAlignment="Center" >
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                        <TextBlock Text="Date" TextWrapping="Wrap"/>
-                        <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" Text="Show the current date on the glance screen" />
-
-                    </Grid>
-
-                    <ToggleSwitch Grid.Column="2" VerticalAlignment="Center" Margin="24,0,-72,0" x:Name="DateToggle" IsOn="{x:Bind ViewModel.Date, Mode=TwoWay}"/>
-                </Grid>
-
-                <Grid Style="{StaticResource GridSettingsBlockStyle}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <FontIcon Glyph="&#xE3BC;" Margin="2,0,20,0"/>
-
-                    <Grid Grid.Column="1" VerticalAlignment="Center" >
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                        <TextBlock Text="Notification icons" TextWrapping="Wrap"/>
-                        <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" Text="Show your notification icons on the glance screen" />
-
-                    </Grid>
-
-                    <ToggleSwitch Grid.Column="2" VerticalAlignment="Center" Margin="24,0,-72,0" x:Name="NotificationIconsToggle" IsOn="{x:Bind ViewModel.NotificationIcons, Mode=TwoWay}"/>
-                </Grid>
-
-                <Grid Style="{StaticResource GridSettingsBlockStyle}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <FontIcon Glyph="&#xE74C;" Margin="2,0,20,0"/>
-
-                    <Grid Grid.Column="1" VerticalAlignment="Center" >
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-
-                        <TextBlock Text="Detailed app status" TextWrapping="Wrap"/>
-                        <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" Text="Show detailed app status on the glance screen" />
-
-                    </Grid>
-
-                    <ToggleSwitch Grid.Column="2" VerticalAlignment="Center" Margin="24,0,-72,0" x:Name="DetailedAppStatusToggle" IsOn="{x:Bind ViewModel.DetailedAppStatus, Mode=TwoWay}"/>
-                </Grid>
+                    <ToggleSwitch x:Name="DetailedAppStatusToggle"
+                                  IsOn="{x:Bind ViewModel.DetailedAppStatus, Mode=TwoWay}"
+                                  Style="{StaticResource RightAlignedToggleSwitchStyle}"/>
+                </local:SettingsBlockControl>
 
                 <TextBlock Text="Exceptions" Padding="0,24,0,0" Style="{StaticResource TextBlockGroupHeaderStyle}"/>
 
-                <Grid Style="{StaticResource GridSettingsBlockStyle}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
+                <local:SettingsBlockControl Title="Always show glance screen when charging"
+                                            Description="Show the glance screen all the time when a charger is plugged in and the device is charging">
+                    <local:SettingsBlockControl.Icon>
+                        <FontIcon Glyph="&#xF602;" />
+                    </local:SettingsBlockControl.Icon>
 
-                    <FontIcon Glyph="&#xF602;" Margin="2,0,20,0"/>
+                    <ToggleSwitch x:Name="AlwaysShowGlanceScreenWhileChargingToggle"
+                                  IsOn="{x:Bind ViewModel.AlwaysShowWhenCharging, Mode=TwoWay}"
+                                  Style="{StaticResource RightAlignedToggleSwitchStyle}"/>
+                </local:SettingsBlockControl>
 
-                    <Grid Grid.Column="1" VerticalAlignment="Center" >
+                <local:SettingsBlockControl Title="Night mode"
+                                            Description="Night mode overrides charging settings.">
+                    <local:SettingsBlockControl.Icon>
+                        <FontIcon Glyph="&#xE708;" />
+                    </local:SettingsBlockControl.Icon>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                    <ComboBox x:Name="NightModeComboBox"
+                              SelectedIndex="{x:Bind ViewModel.NightMode, Mode=TwoWay}">
+                        <ComboBox.Items>
+                            <ComboBoxItem Content="Off"/>
+                            <ComboBoxItem Content="Red"/>
+                            <ComboBoxItem Content="Green"/>
+                            <ComboBoxItem Content="Blue"/>
+                            <ComboBoxItem Content="Hide glance screen"/>
+                        </ComboBox.Items>
+                    </ComboBox>
 
-                        <TextBlock Text="Always show glance screen when charging" TextWrapping="Wrap"/>
-                        <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" Text="Show the glance screen all the time when a charger is plugged in and the device is charging" />
+                    <local:SettingsBlockControl.ExpandableContent>
 
-                    </Grid>
+                        <local:SettingsDisplayControl Margin="16"
+                                                      Title="Time intervals">
 
-                    <ToggleSwitch Grid.Column="2" VerticalAlignment="Center" Margin="24,0,-72,0" x:Name="AlwaysShowGlanceScreenWhileChargingToggle" IsOn="{x:Bind ViewModel.AlwaysShowWhenCharging, Mode=TwoWay}"/>
-                </Grid>
+                            <local:SettingsDisplayControl.AdditionalDescriptionContent>
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource TextBlockSettingDescriptionStyle}"
+                                               x:Name="ShowLabelText"
+                                               x:Load="{x:Bind NightModeComboBox.SelectedIndex, Mode=OneWay, Converter={StaticResource IntegerIsNotFourToBooleanConverter}}"
+                                               Text="Dims glance screen and hides the photo and Glance screen app during the set time range." />
+                                    <TextBlock Style="{StaticResource TextBlockSettingDescriptionStyle}"
+                                               x:Name="HideLabelText"
+                                               x:Load="{x:Bind NightModeComboBox.SelectedIndex, Mode=OneWay, Converter={StaticResource IntegerIsFourToBooleanConverter}}"
+                                               Text="Hides glance screen during the set time range." />
 
-                <muxc:Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Margin="0,0,0,8">
-                    <muxc:Expander.Header>
-                        <Grid MinHeight="68" HorizontalAlignment="Stretch">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="42"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <FontIcon Glyph="&#xE708;" Margin="2,0,20,0"/>
-
-                            <Grid Grid.Column="1" VerticalAlignment="Center">
-
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-
-                                <TextBlock Text="Night mode" TextWrapping="Wrap"/>
-                                <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" Text="Night mode overrides charging settings." />
-
-                            </Grid>
-
-                            <ComboBox Grid.Column="2" VerticalAlignment="Center" Margin="24,0,0,0" x:Name="NightModeComboBox" SelectedIndex="{x:Bind ViewModel.NightMode, Mode=TwoWay}">
-                                <ComboBox.Items>
-                                    <ComboBoxItem Content="Off"/>
-                                    <ComboBoxItem Content="Red"/>
-                                    <ComboBoxItem Content="Green"/>
-                                    <ComboBoxItem Content="Blue"/>
-                                    <ComboBoxItem Content="Hide glance screen"/>
-                                </ComboBox.Items>
-                            </ComboBox>
-                        </Grid>
-                    </muxc:Expander.Header>
-
-                    <Grid HorizontalAlignment="Stretch">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="42"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Grid Grid.Column="1" VerticalAlignment="Center">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-
-                            <TextBlock Text="Time intervals" TextWrapping="Wrap"/>
-                            <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" x:Name="ShowLabelText" x:Load="{x:Bind NightModeComboBox.SelectedIndex, Mode=OneWay, Converter={StaticResource IntegerIsNotFourToBooleanConverter}}" Text="Dims glance screen and hides the photo and Glance screen app during the set time range." />
-                            <TextBlock Grid.Row="1" Style="{StaticResource TextBlockSettingDescriptionStyle}" x:Name="HideLabelText" x:Load="{x:Bind NightModeComboBox.SelectedIndex, Mode=OneWay, Converter={StaticResource IntegerIsFourToBooleanConverter}}" Text="Hides glance screen during the set time range." />
-
-                            <TimePicker Grid.Row="2" VerticalAlignment="Center" Margin="0,12,0,0" Header="Start time" ClockIdentifier="24HourClock" Time="{x:Bind ViewModel.StartTime, Mode=TwoWay}" IsEnabled="{x:Bind NightModeComboBox.SelectedIndex, Mode=OneWay, Converter={StaticResource IntegerHigherThanNilToBooleanConverter}}"/>
-                            <TimePicker Grid.Row="3" VerticalAlignment="Center" Margin="0,6,0,12" Header="End time" ClockIdentifier="24HourClock" Time="{x:Bind ViewModel.EndTime, Mode=TwoWay}" IsEnabled="{x:Bind NightModeComboBox.SelectedIndex, Mode=OneWay, Converter={StaticResource IntegerHigherThanNilToBooleanConverter}}"/>
-                        </Grid>
-                    </Grid>
-                </muxc:Expander>
+                                    <TimePicker VerticalAlignment="Center"
+                                                Margin="0,12,0,0"
+                                                Header="Start time"
+                                                ClockIdentifier="24HourClock"
+                                                Time="{x:Bind ViewModel.StartTime, Mode=TwoWay}"
+                                                IsEnabled="{x:Bind NightModeComboBox.SelectedIndex, Mode=OneWay, Converter={StaticResource IntegerHigherThanNilToBooleanConverter}}"/>
+                                    <TimePicker VerticalAlignment="Center"
+                                                Margin="0,6,0,12"
+                                                Header="End time"
+                                                ClockIdentifier="24HourClock"
+                                                Time="{x:Bind ViewModel.EndTime, Mode=TwoWay}"
+                                                IsEnabled="{x:Bind NightModeComboBox.SelectedIndex, Mode=OneWay, Converter={StaticResource IntegerHigherThanNilToBooleanConverter}}"/>
+                                </StackPanel>
+                            </local:SettingsDisplayControl.AdditionalDescriptionContent>
+                        </local:SettingsDisplayControl>
+                    </local:SettingsBlockControl.ExpandableContent>
+                </local:SettingsBlockControl>
             </StackPanel>
         </StackPanel>
     </ScrollViewer>
