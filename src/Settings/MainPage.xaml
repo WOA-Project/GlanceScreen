@@ -570,7 +570,7 @@
 
                     <local:SettingsBlockControl.ExpandableContent>
 
-                        <local:SettingsDisplayControl Margin="16"
+                        <local:SettingsDisplayControl Margin="58,16,16,16"
                                                       Title="Image style"
                                                       Description="Change the way your background photo looks on the glance screen">
 
@@ -651,7 +651,7 @@
 
                     <local:SettingsBlockControl.ExpandableContent>
 
-                        <local:SettingsDisplayControl Margin="16"
+                        <local:SettingsDisplayControl Margin="58,16,16,16"
                                                       Title="Time intervals">
 
                             <local:SettingsDisplayControl.AdditionalDescriptionContent>
