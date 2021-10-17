@@ -547,6 +547,11 @@
             </local:SettingsBlockControl>
 
             <StackPanel Margin="0,24,0,0" x:Name="MainContentStackPanel" x:Load="{x:Bind TimeComboBox.SelectedIndex, Mode=OneWay, Converter={StaticResource IntegerHigherThanNilToBooleanConverter}}">
+                <StackPanel.ChildrenTransitions>
+                    <TransitionCollection>
+                        <ReorderThemeTransition />
+                    </TransitionCollection>
+                </StackPanel.ChildrenTransitions>
                 <TextBlock Text="Content" Style="{StaticResource TextBlockGroupHeaderStyle}"/>
 
                 <RichTextBlock Margin="0,0,0,8">
