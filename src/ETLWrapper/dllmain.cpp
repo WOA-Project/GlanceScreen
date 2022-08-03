@@ -4,53 +4,47 @@
 #include <stdlib.h>
 #include <fstream>
 
-typedef ULONG (WINAPI* PEventWrite)(
-    REGHANDLE              RegHandle,
-    PCEVENT_DESCRIPTOR     EventDescriptor,
-    ULONG                  UserDataCount,
-    PEVENT_DATA_DESCRIPTOR UserData
-    );
+typedef ULONG(WINAPI *PEventWrite)(
+    REGHANDLE RegHandle,
+    PCEVENT_DESCRIPTOR EventDescriptor,
+    ULONG UserDataCount,
+    PEVENT_DATA_DESCRIPTOR UserData);
 
-typedef ULONG(WINAPI* PEventWriteTransfer)(
-    REGHANDLE              RegHandle,
-    PCEVENT_DESCRIPTOR     EventDescriptor,
-    LPCGUID                ActivityId,
-    LPCGUID                RelatedActivityId,
-    ULONG                  UserDataCount,
-    PEVENT_DATA_DESCRIPTOR UserData
-);
+typedef ULONG(WINAPI *PEventWriteTransfer)(
+    REGHANDLE RegHandle,
+    PCEVENT_DESCRIPTOR EventDescriptor,
+    LPCGUID ActivityId,
+    LPCGUID RelatedActivityId,
+    ULONG UserDataCount,
+    PEVENT_DATA_DESCRIPTOR UserData);
 
-typedef ULONG(WINAPI* PEventSetInformation)(
-    REGHANDLE        RegHandle,
+typedef ULONG(WINAPI *PEventSetInformation)(
+    REGHANDLE RegHandle,
     EVENT_INFO_CLASS InformationClass,
-    PVOID            EventInformation,
-    ULONG            InformationLength
-    );
+    PVOID EventInformation,
+    ULONG InformationLength);
 
-typedef ULONG(WINAPI* PEventRegister)(
-    LPCGUID         ProviderId,
+typedef ULONG(WINAPI *PEventRegister)(
+    LPCGUID ProviderId,
     PENABLECALLBACK EnableCallback,
-    PVOID           CallbackContext,
-    PREGHANDLE      RegHandle
-    );
+    PVOID CallbackContext,
+    PREGHANDLE RegHandle);
 
-typedef ULONG(WINAPI* PEventUnregister)(
-    REGHANDLE RegHandle
-);
+typedef ULONG(WINAPI *PEventUnregister)(
+    REGHANDLE RegHandle);
 
-typedef ULONG(WINAPI* PEventRegister)(
-    LPCGUID         ProviderId,
+typedef ULONG(WINAPI *PEventRegister)(
+    LPCGUID ProviderId,
     PENABLECALLBACK EnableCallback,
-    PVOID           CallbackContext,
-    PREGHANDLE      RegHandle
-    );
+    PVOID CallbackContext,
+    PREGHANDLE RegHandle);
 
 ULONG ReadAndPrintArrayData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize);
 ULONG ReadAndPrintData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize);
 
 ULONG ReadAndPrintArrayData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize)
 {
-    UINT16 ArraySize = *(UINT16*)Data;
+    UINT16 ArraySize = *(UINT16 *)Data;
 
     ULONG_PTR ArrayData = Data + sizeof(UINT16);
 
@@ -95,7 +89,7 @@ ULONG ReadAndPrintData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize)
         ULONG bufSize = wcslen(el) * sizeof(wchar_t) + 2;
         ULONG cBufSize = strSize + 1;
 
-        char* realBuffer = (char*)malloc(sizeof(char) * cBufSize);
+        char *realBuffer = (char *)malloc(sizeof(char) * cBufSize);
 
         size_t Converted = 0;
         wcstombs_s(&Converted, realBuffer, cBufSize, el, bufSize);
@@ -118,7 +112,7 @@ ULONG ReadAndPrintData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize)
     case 23:
     {
         // ASCII + Count
-        CHAR Size = *(CHAR*)Data;
+        CHAR Size = *(CHAR *)Data;
 
         PCHAR el = (PCHAR)malloc(Size + 1);
         memset(el, 0, Size + 1);
@@ -136,7 +130,7 @@ ULONG ReadAndPrintData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize)
     case 3:
     {
         // INT8
-        INT8 el = *(INT8*)Data;
+        INT8 el = *(INT8 *)Data;
 
         logFile << el;
         readBytes = sizeof(INT8);
@@ -145,7 +139,7 @@ ULONG ReadAndPrintData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize)
     case 4:
     {
         // UINT8
-        UINT8 el = *(UINT8*)Data;
+        UINT8 el = *(UINT8 *)Data;
 
         logFile << el;
         readBytes = sizeof(UINT8);
@@ -154,7 +148,7 @@ ULONG ReadAndPrintData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize)
     case 5:
     {
         // INT16
-        INT16 el = *(INT16*)Data;
+        INT16 el = *(INT16 *)Data;
 
         logFile << el;
         readBytes = sizeof(INT16);
@@ -163,7 +157,7 @@ ULONG ReadAndPrintData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize)
     case 6:
     {
         // UINT16
-        UINT16 el = *(UINT16*)Data;
+        UINT16 el = *(UINT16 *)Data;
 
         logFile << el;
         readBytes = sizeof(UINT16);
@@ -172,7 +166,7 @@ ULONG ReadAndPrintData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize)
     case 7:
     {
         // INT32
-        INT32 el = *(INT32*)Data;
+        INT32 el = *(INT32 *)Data;
 
         logFile << el;
         readBytes = sizeof(INT32);
@@ -181,7 +175,7 @@ ULONG ReadAndPrintData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize)
     case 8:
     {
         // UINT32
-        UINT32 el = *(UINT32*)Data;
+        UINT32 el = *(UINT32 *)Data;
 
         logFile << el;
         readBytes = sizeof(UINT32);
@@ -190,7 +184,7 @@ ULONG ReadAndPrintData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize)
     case 20:
     {
         // HEXINT32
-        UINT32 el = *(UINT32*)Data;
+        UINT32 el = *(UINT32 *)Data;
 
         logFile << el;
         readBytes = sizeof(UINT32);
@@ -199,7 +193,7 @@ ULONG ReadAndPrintData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize)
     case 9:
     {
         // INT64
-        INT64 el = *(INT64*)Data;
+        INT64 el = *(INT64 *)Data;
 
         logFile << el;
         readBytes = sizeof(INT64);
@@ -208,7 +202,7 @@ ULONG ReadAndPrintData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize)
     case 10:
     {
         // UINT64
-        UINT64 el = *(UINT64*)Data;
+        UINT64 el = *(UINT64 *)Data;
 
         logFile << el;
         readBytes = sizeof(UINT64);
@@ -217,7 +211,7 @@ ULONG ReadAndPrintData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize)
     case 21:
     {
         // HEXINT64
-        UINT64 el = *(UINT64*)Data;
+        UINT64 el = *(UINT64 *)Data;
 
         logFile << el;
         readBytes = sizeof(UINT64);
@@ -226,7 +220,7 @@ ULONG ReadAndPrintData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize)
     case 11:
     {
         // FLOAT
-        FLOAT el = *(FLOAT*)Data;
+        FLOAT el = *(FLOAT *)Data;
 
         logFile << el;
         readBytes = sizeof(FLOAT);
@@ -235,7 +229,7 @@ ULONG ReadAndPrintData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize)
     case 12:
     {
         // DOUBLE
-        double el = *(double*)Data;
+        double el = *(double *)Data;
 
         logFile << el;
         readBytes = sizeof(double);
@@ -244,7 +238,7 @@ ULONG ReadAndPrintData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize)
     case 13:
     {
         // BOOL32
-        DWORD el = *(DWORD*)Data;
+        DWORD el = *(DWORD *)Data;
 
         logFile << el;
         readBytes = sizeof(DWORD);
@@ -260,9 +254,9 @@ ULONG ReadAndPrintData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize)
     case 15:
     {
         // GUID
-        GUID el = *(GUID*)Data;
+        GUID el = *(GUID *)Data;
 
-        //logFile << el; //TODO!
+        // logFile << el; //TODO!
 
         readBytes = sizeof(GUID);
         break;
@@ -270,9 +264,9 @@ ULONG ReadAndPrintData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize)
     case 18:
     {
         // SYSTEMTIME
-        SYSTEMTIME el = *(SYSTEMTIME*)Data;
+        SYSTEMTIME el = *(SYSTEMTIME *)Data;
 
-        //logFile << el; //TODO!
+        // logFile << el; //TODO!
 
         readBytes = sizeof(SYSTEMTIME);
         break;
@@ -284,13 +278,13 @@ ULONG ReadAndPrintData(UINT32 DataType, ULONG_PTR Data, ULONG DataSize)
     return readBytes;
 }
 
-extern "C" {
+extern "C"
+{
     __declspec(dllexport) ULONG EventWrite(
-        REGHANDLE              RegHandle,
-        PCEVENT_DESCRIPTOR     EventDescriptor,
-        ULONG                  UserDataCount,
-        PEVENT_DATA_DESCRIPTOR UserData
-    )
+        REGHANDLE RegHandle,
+        PCEVENT_DESCRIPTOR EventDescriptor,
+        ULONG UserDataCount,
+        PEVENT_DATA_DESCRIPTOR UserData)
     {
         std::ofstream logFile;
         /*for (int i = 0; i < UserDataCount; i++)
@@ -327,10 +321,10 @@ extern "C" {
                 ULONG_PTR ptr = (ULONG_PTR)Current->Ptr;
 
                 // Event Name + var names
-                UINT16 StructSize = *(UINT16*)ptr;
+                UINT16 StructSize = *(UINT16 *)ptr;
                 ptr += sizeof(UINT16);
 
-                UCHAR Tag = *(UCHAR*)ptr;
+                UCHAR Tag = *(UCHAR *)ptr;
                 ptr += sizeof(UCHAR);
 
                 if (Tag & 0x80)
@@ -338,7 +332,7 @@ extern "C" {
                     ptr += sizeof(UCHAR); // Unknown again
                 }
 
-                CHAR* Name = (CHAR*)ptr;
+                CHAR *Name = (CHAR *)ptr;
                 ptr += sizeof(CHAR) * (strlen(Name) + 1);
 
                 logFile.open("C:\\TouchProcessorTracing.txt", std::ofstream::out | std::ofstream::app);
@@ -347,21 +341,21 @@ extern "C" {
 
                 logFile.close();
 
-                //UINT16 DataFieldsSize = Current->Ptr - ptr;
+                // UINT16 DataFieldsSize = Current->Ptr - ptr;
 
                 while (ptr < (ULONG_PTR)Current->Ptr + StructSize)
                 {
-                    CHAR* DataFieldName = (CHAR*)ptr;
+                    CHAR *DataFieldName = (CHAR *)ptr;
                     ptr += sizeof(CHAR) * (strlen(DataFieldName) + 1);
 
-                    UCHAR TagIn = *(UCHAR*)ptr;
+                    UCHAR TagIn = *(UCHAR *)ptr;
                     ptr += sizeof(UCHAR);
 
                     UCHAR TagOut = 0;
 
                     if (TagIn & 128)
                     {
-                        TagOut = *(UCHAR*)ptr;
+                        TagOut = *(UCHAR *)ptr;
                         ptr += sizeof(UCHAR);
 
                         if (TagOut & 0x80)
@@ -415,13 +409,12 @@ extern "C" {
     }
 
     __declspec(dllexport) ULONG EventWriteTransfer(
-        REGHANDLE              RegHandle,
-        PCEVENT_DESCRIPTOR     EventDescriptor,
-        LPCGUID                ActivityId,
-        LPCGUID                RelatedActivityId,
-        ULONG                  UserDataCount,
-        PEVENT_DATA_DESCRIPTOR UserData
-    )
+        REGHANDLE RegHandle,
+        PCEVENT_DESCRIPTOR EventDescriptor,
+        LPCGUID ActivityId,
+        LPCGUID RelatedActivityId,
+        ULONG UserDataCount,
+        PEVENT_DATA_DESCRIPTOR UserData)
     {
         /*for (int i = 0; i < UserDataCount; i++)
         {
@@ -453,7 +446,7 @@ extern "C" {
         for (ULONG i = 0; i < UserDataCount; i++)
         {
             PEVENT_DATA_DESCRIPTOR Current = UserData + i;
-            
+
             if (Current->Reserved == 2)
             {
                 // Event GUID
@@ -463,21 +456,21 @@ extern "C" {
             if (Current->Reserved == 1)
             {
                 ULONG_PTR ptr = (ULONG_PTR)Current->Ptr;
-				
-				// Event Name + var names
-				UINT16 StructSize = *(UINT16*)ptr;
+
+                // Event Name + var names
+                UINT16 StructSize = *(UINT16 *)ptr;
                 ptr += sizeof(UINT16);
 
-                UCHAR Tag = *(UCHAR*)ptr;
+                UCHAR Tag = *(UCHAR *)ptr;
                 ptr += sizeof(UCHAR);
 
                 if (Tag & 0x80)
                 {
-					ptr += sizeof(UCHAR); // Unknown again
+                    ptr += sizeof(UCHAR); // Unknown again
                 }
 
-				CHAR* Name = (CHAR*)ptr;
-				ptr += sizeof(CHAR) * (strlen(Name) + 1);
+                CHAR *Name = (CHAR *)ptr;
+                ptr += sizeof(CHAR) * (strlen(Name) + 1);
 
                 logFile.open("C:\\TouchProcessorTracing.txt", std::ofstream::out | std::ofstream::app);
 
@@ -485,27 +478,27 @@ extern "C" {
 
                 logFile.close();
 
-                //UINT16 DataFieldsSize = Current->Ptr - ptr;
+                // UINT16 DataFieldsSize = Current->Ptr - ptr;
 
                 while (ptr < (ULONG_PTR)Current->Ptr + StructSize)
                 {
-					CHAR* DataFieldName = (CHAR*)ptr;
-					ptr += sizeof(CHAR) * (strlen(DataFieldName) + 1);
-					
-					UCHAR TagIn = *(UCHAR*)ptr;
-					ptr += sizeof(UCHAR);
+                    CHAR *DataFieldName = (CHAR *)ptr;
+                    ptr += sizeof(CHAR) * (strlen(DataFieldName) + 1);
+
+                    UCHAR TagIn = *(UCHAR *)ptr;
+                    ptr += sizeof(UCHAR);
 
                     UCHAR TagOut = 0;
 
                     if (TagIn & 128)
                     {
-                        TagOut = *(UCHAR*)ptr;
+                        TagOut = *(UCHAR *)ptr;
                         ptr += sizeof(UCHAR);
 
-						if (TagOut & 0x80)
-						{
-							ptr += sizeof(UINT32); // Unknown
-						}
+                        if (TagOut & 0x80)
+                        {
+                            ptr += sizeof(UINT32); // Unknown
+                        }
                     }
 
                     logFile.open("C:\\TouchProcessorTracing.txt", std::ofstream::out | std::ofstream::app);
@@ -553,11 +546,10 @@ extern "C" {
     }
 
     __declspec(dllexport) ULONG EventSetInformation(
-        REGHANDLE        RegHandle,
+        REGHANDLE RegHandle,
         EVENT_INFO_CLASS InformationClass,
-        PVOID            EventInformation,
-        ULONG            InformationLength
-    )
+        PVOID EventInformation,
+        ULONG InformationLength)
     {
         HMODULE Dll = LoadLibrary(L"advapi32.dll");
         PEventSetInformation pEventWriteTransfer = (PEventSetInformation)GetProcAddress(Dll, "EventSetInformation");
@@ -567,8 +559,7 @@ extern "C" {
     }
 
     __declspec(dllexport) ULONG EventUnregister(
-        REGHANDLE RegHandle
-    )
+        REGHANDLE RegHandle)
     {
         HMODULE Dll = LoadLibrary(L"advapi32.dll");
         PEventUnregister pEventWriteTransfer = (PEventUnregister)GetProcAddress(Dll, "EventUnregister");
@@ -578,11 +569,10 @@ extern "C" {
     }
 
     __declspec(dllexport) ULONG EventRegister(
-        LPCGUID         ProviderId,
+        LPCGUID ProviderId,
         PENABLECALLBACK EnableCallback,
-        PVOID           CallbackContext,
-        PREGHANDLE      RegHandle
-    )
+        PVOID CallbackContext,
+        PREGHANDLE RegHandle)
     {
         HMODULE Dll = LoadLibrary(L"advapi32.dll");
         PEventRegister pEventWriteTransfer = (PEventRegister)GetProcAddress(Dll, "EventRegister");
@@ -592,10 +582,9 @@ extern "C" {
     }
 }
 
-BOOL APIENTRY DllMain( HMODULE hModule,
-                       DWORD  ul_reason_for_call,
-                       LPVOID lpReserved
-                     )
+BOOL APIENTRY DllMain(HMODULE hModule,
+                      DWORD ul_reason_for_call,
+                      LPVOID lpReserved)
 {
     switch (ul_reason_for_call)
     {
@@ -607,4 +596,3 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     }
     return TRUE;
 }
-
