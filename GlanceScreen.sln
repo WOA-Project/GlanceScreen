@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31025.218
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32714.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlanceScreen", "src\Settings\GlanceScreen.csproj", "{52B95F7E-6532-4401-9991-06B1A158EF59}"
 EndProject
@@ -76,7 +76,8 @@ Global
 		{A98C3B9B-955F-46FA-A7D7-1C1F5CBAA63C}.Debug|x86.Build.0 = Debug|Win32
 		{A98C3B9B-955F-46FA-A7D7-1C1F5CBAA63C}.Release|ARM.ActiveCfg = Release|ARM
 		{A98C3B9B-955F-46FA-A7D7-1C1F5CBAA63C}.Release|ARM.Build.0 = Release|ARM
-		{A98C3B9B-955F-46FA-A7D7-1C1F5CBAA63C}.Release|ARM64.ActiveCfg = Release|Win32
+		{A98C3B9B-955F-46FA-A7D7-1C1F5CBAA63C}.Release|ARM64.ActiveCfg = Release|ARM64
+		{A98C3B9B-955F-46FA-A7D7-1C1F5CBAA63C}.Release|ARM64.Build.0 = Release|ARM64
 		{A98C3B9B-955F-46FA-A7D7-1C1F5CBAA63C}.Release|x64.ActiveCfg = Release|x64
 		{A98C3B9B-955F-46FA-A7D7-1C1F5CBAA63C}.Release|x64.Build.0 = Release|x64
 		{A98C3B9B-955F-46FA-A7D7-1C1F5CBAA63C}.Release|x86.ActiveCfg = Release|Win32
@@ -106,7 +107,8 @@ Global
 		{0A11256F-3EAF-4EBF-9148-FE453CD9FBEC}.Debug|x86.Build.0 = Debug|Win32
 		{0A11256F-3EAF-4EBF-9148-FE453CD9FBEC}.Release|ARM.ActiveCfg = Release|ARM
 		{0A11256F-3EAF-4EBF-9148-FE453CD9FBEC}.Release|ARM.Build.0 = Release|ARM
-		{0A11256F-3EAF-4EBF-9148-FE453CD9FBEC}.Release|ARM64.ActiveCfg = Release|Win32
+		{0A11256F-3EAF-4EBF-9148-FE453CD9FBEC}.Release|ARM64.ActiveCfg = Release|ARM64
+		{0A11256F-3EAF-4EBF-9148-FE453CD9FBEC}.Release|ARM64.Build.0 = Release|ARM64
 		{0A11256F-3EAF-4EBF-9148-FE453CD9FBEC}.Release|x64.ActiveCfg = Release|x64
 		{0A11256F-3EAF-4EBF-9148-FE453CD9FBEC}.Release|x64.Build.0 = Release|x64
 		{0A11256F-3EAF-4EBF-9148-FE453CD9FBEC}.Release|x86.ActiveCfg = Release|Win32
